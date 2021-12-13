@@ -30,7 +30,7 @@ export default function Home(props) {
 			</nav>
 
 			<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-				<Button />
+				<Button background={"DAO.jpg"} />
 				<Button
 					link={"https://discord.com/invite/3MPb6Xuhec"}
 					background={"DISCORD.jpg"}
