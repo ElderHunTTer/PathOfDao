@@ -9,18 +9,13 @@ import axios from "axios";
 
 const bearerToken =
 	"AAAAAAAAAAAAAAAAAAAAAI5oWwEAAAAAHNgKficRsJegOJicc70TjUcHmfw%3DO6EHyBLKNsCoTwSh2gu3b6xq2s67pyAWtKb3nS9wBtIpeOmz6E";
-
 let axiosConfig = {
 	headers: {
 		Authorization: "Bearer " + bearerToken
 	}
 };
+
 export default function Home(props) {
-	const [tweets, setTweets] = useState([]);
-
-	console.log(props.tweets);
-	console.log(props.userID);
-
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen">
 			<Head>
@@ -47,11 +42,16 @@ export default function Home(props) {
 				<DiscordButton background={"discord_logos.png"} />
 				<NotionButton background={"notion_logo.png"} />
 				<GitCoinButton background={"gitcoin.png"} />
-				<div>
+				<div className={"flex flex-col w-full justify-center"}>
 					{props.tweets.data
 						.filter((x) => !x.text.includes("RT"))
 						.map((tweet) => (
-							<TweetEmbed placeholder={"loading"} id={tweet.id} />
+							<div className={"self-center"}>
+								<TweetEmbed
+									placeholder={"loading"}
+									id={tweet.id}
+								/>
+							</div>
 						))}
 				</div>
 			</main>
