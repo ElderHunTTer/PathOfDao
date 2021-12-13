@@ -1,5 +1,6 @@
 import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
+import { Tweet, Timeline } from "react-twitter-widgets";
 import axios from "axios";
 import Button from "../components/button";
 
@@ -49,14 +50,18 @@ export default function Home(props) {
 					link={"https://github.com/ElderHunTTer/PathOfDao"}
 					background={"GITHUB.jpg"}
 				/>
-				<div className={"flex flex-row w-full justify-center"}>
+				<div
+					className={"flex flex-row w-5/6 justify-center self-center"}
+				>
 					{props.tweets.data
 						.filter((x) => !x.text.includes("RT"))
 						.map((tweet) => (
-							<div className={"flex h-full self-center"}>
-								<TweetEmbed
-									placeholder={"loading"}
-									id={tweet.id}
+							<div key={tweet.id} className={"self-center"}>
+								<Tweet
+									tweetId={tweet.id}
+									options={{
+										width: 300
+									}}
 								/>
 							</div>
 						))}
