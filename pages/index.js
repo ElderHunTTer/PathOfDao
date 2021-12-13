@@ -1,11 +1,7 @@
 import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
-import DaoButton from "../components/dao_button";
-import DiscordButton from "../components/discord_button";
-import GitCoinButton from "../components/gitcoin_button";
-import NotionButton from "../components/notion_button";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "../components/button";
 
 const bearerToken =
 	"AAAAAAAAAAAAAAAAAAAAAI5oWwEAAAAAHNgKficRsJegOJicc70TjUcHmfw%3DO6EHyBLKNsCoTwSh2gu3b6xq2s67pyAWtKb3nS9wBtIpeOmz6E";
@@ -38,23 +34,20 @@ export default function Home(props) {
 			</nav>
 
 			<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-				<DaoButton />
-				<DiscordButton background={"discord_logos.png"} />
-				<NotionButton background={"notion_logo.png"} />
-				<GitCoinButton background={"gitcoin.png"} />
-				<div className={"flex flex-col w-full justify-center"}>
-					{props.tweets.data
-						.filter((x) => !x.text.includes("RT"))
-						.map((tweet) => (
-							<div className={"self-center"}>
-								<TweetEmbed
-									placeholder={"loading"}
-									id={tweet.id}
-								/>
-							</div>
-						))}
-				</div>
+				<Button />
+				<Button background={"DISCORD.jpg"} />
+				<Button background={"NOTION.jpg"} />
+				<Button background={"GITCOIN.jpg"} />
 			</main>
+			<div className={"flex flex-col w-full justify-center"}>
+				{props.tweets.data
+					.filter((x) => !x.text.includes("RT"))
+					.map((tweet) => (
+						<div className={"self-center"}>
+							<TweetEmbed placeholder={"loading"} id={tweet.id} />
+						</div>
+					))}
+			</div>
 
 			<footer className="flex items-center justify-center w-full h-24 border-t">
 				<a
