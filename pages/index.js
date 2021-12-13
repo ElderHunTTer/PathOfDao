@@ -1,53 +1,93 @@
-import Head from 'next/head'
-import DaoButton from '../components/dao_button'
-import DiscordButton from '../components/discord_button'
-import GitCoinButton from '../components/gitcoin_button'
-import NotionButton from '../components/notion_button'
+import Head from "next/head";
+import TweetEmbed from "react-tweet-embed";
+import DaoButton from "../components/dao_button";
+import DiscordButton from "../components/discord_button";
+import GitCoinButton from "../components/gitcoin_button";
+import NotionButton from "../components/notion_button";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <Head>
-        <title>Path Of Dao</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+const bearerToken =
+	"AAAAAAAAAAAAAAAAAAAAAI5oWwEAAAAAHNgKficRsJegOJicc70TjUcHmfw%3DO6EHyBLKNsCoTwSh2gu3b6xq2s67pyAWtKb3nS9wBtIpeOmz6E";
 
-      <nav className={'flex flex-row justify-evenly bg-green-200 px-2 w-full'}>
-        <div>
-          Home
-        </div>
-        <div>
-          Stuff
-        </div>
-        <div>
-          Stuff
-        </div>
-        <div>
-          <image href={""} />
-        </div>
-        <div>
-          Wallet Info
-        </div>
-      </nav>
+let axiosConfig = {
+	headers: {
+		Authorization: "Bearer " + bearerToken
+	}
+};
+export default function Home(props) {
+	const [tweets, setTweets] = useState([]);
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <DaoButton />
-        <DiscordButton background={"discord_logos.png"}/>
-        <NotionButton background={"notion_logo.png"} />
-        <GitCoinButton background={"gitcoin.png"} />
-      </main>
+	console.log(props.tweets);
+	console.log(props.userID);
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+	return (
+		<div className="flex flex-col items-center justify-center min-h-screen">
+			<Head>
+				<title>Path Of Dao</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+
+			<nav
+				className={
+					"flex flex-row justify-evenly bg-green-200 px-2 w-full"
+				}
+			>
+				<div>Home</div>
+				<div>Stuff</div>
+				<div>Stuff</div>
+				<div>
+					<image href={""} />
+				</div>
+				<div>Wallet Info</div>
+			</nav>
+
+			<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+				<DaoButton />
+				<DiscordButton background={"discord_logos.png"} />
+				<NotionButton background={"notion_logo.png"} />
+				<GitCoinButton background={"gitcoin.png"} />
+				<div>
+					{props.tweets.data
+						.filter((x) => !x.text.includes("RT"))
+						.map((tweet) => (
+							<TweetEmbed placeholder={"loading"} id={tweet.id} />
+						))}
+				</div>
+			</main>
+
+			<footer className="flex items-center justify-center w-full h-24 border-t">
+				<a
+					className="flex items-center justify-center"
+					href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Powered by{" "}
+					<img
+						src="/vercel.svg"
+						alt="Vercel Logo"
+						className="h-4 ml-2"
+					/>
+				</a>
+			</footer>
+		</div>
+	);
+}
+export async function getServerSideProps() {
+	try {
+		const users = await axios.get(
+			"https://api.twitter.com/2/users/by?usernames=PathOfDao&user.fields=created_at&expansions=pinned_tweet_id&tweet.fields=author_id,created_at",
+			axiosConfig
+		);
+		const tweets = await axios.get(
+			`https://api.twitter.com/2/users/${users.data.data[0].id}/tweets?tweet.fields=created_at&expansions=author_id&user.fields=created_at&max_results=5`,
+			axiosConfig
+		);
+		return {
+			props: { tweets: tweets.data, userID: users.data.data[0].id }
+		};
+	} catch (e) {
+		console.log(e.message);
+	}
 }
