@@ -34,16 +34,19 @@ export default function Home(props) {
 				<Button background={"DISCORD.jpg"} />
 				<Button background={"NOTION.jpg"} />
 				<Button background={"GITCOIN.jpg"} />
+				<div className={"flex flex-row w-full justify-center"}>
+					{props.tweets.data
+						.filter((x) => !x.text.includes("RT"))
+						.map((tweet) => (
+							<div className={"flex h-full self-center"}>
+								<TweetEmbed
+									placeholder={"loading"}
+									id={tweet.id}
+								/>
+							</div>
+						))}
+				</div>
 			</main>
-			<div className={"flex flex-col w-full justify-center"}>
-				{props.tweets.data
-					.filter((x) => !x.text.includes("RT"))
-					.map((tweet) => (
-						<div className={"self-center"}>
-							<TweetEmbed placeholder={"loading"} id={tweet.id} />
-						</div>
-					))}
-			</div>
 
 			<footer className="flex items-center justify-center w-full h-24 border-t">
 				<a
