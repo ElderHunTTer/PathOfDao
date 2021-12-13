@@ -19,11 +19,7 @@ export default function Home(props) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<nav
-				className={
-					"flex flex-row justify-evenly bg-green-200 px-2 w-full"
-				}
-			>
+			<nav className={"flex flex-row justify-evenly px-2 w-full"}>
 				<div>Home</div>
 				<div>Stuff</div>
 				<div>Stuff</div>
