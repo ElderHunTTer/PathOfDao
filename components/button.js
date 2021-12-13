@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Background = styled.button`
+const Background = styled.a`
 	height: 100px;
 	min-width: 700px;
 	margin: 10px 0;
@@ -15,7 +15,13 @@ const Background = styled.button`
 `;
 
 const Button = (props) => {
-	return <Background backgroundImage={props.background} />;
+	return (
+		<Background
+			href={props.link}
+			target={"_blank"}
+			backgroundImage={props.background}
+		/>
+	);
 };
 
 export default Button;

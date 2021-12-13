@@ -31,9 +31,24 @@ export default function Home(props) {
 
 			<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
 				<Button />
-				<Button background={"DISCORD.jpg"} />
-				<Button background={"NOTION.jpg"} />
-				<Button background={"GITCOIN.jpg"} />
+				<Button
+					link={"https://discord.com/invite/3MPb6Xuhec"}
+					background={"DISCORD.jpg"}
+				/>
+				<Button
+					link={
+						"https://www.notion.so/Public-Proposal-a7c74b3533234f9596194ce14c890cdc"
+					}
+					background={"NOTION.jpg"}
+				/>
+				<Button
+					link={"https://gitcoin.co/grants/3570/pathofdao"}
+					background={"GITCOIN.jpg"}
+				/>
+				<Button
+					link={"https://github.com/ElderHunTTer/PathOfDao"}
+					background={"GITHUB.jpg"}
+				/>
 				<div className={"flex flex-row w-full justify-center"}>
 					{props.tweets.data
 						.filter((x) => !x.text.includes("RT"))
