@@ -52,7 +52,7 @@ export default function Home(props) {
 				<YinYang background={"yinyang.png"} />
 				<Nav />
 				<SpacedBox />
-				<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+				<main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center z-0">
 					<Content {...props} />
 				</main>
 				<Footer />
